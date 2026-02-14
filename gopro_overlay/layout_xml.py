@@ -504,15 +504,23 @@ class Widgets:
             opacity=fattrib(element, "opacity", 0.7, r=FloatRange(0.0, 1.0))
         )
 
-    @allow_attributes({"size", "zoom"})
+    @allow_attributes({"size", "zoom", "rotate", "line-only", "line-rgb", "line-width", "loc-fill", "loc-size", "loc-outline"})
     def create_moving_journey_map(self, element: ET.Element, entry, **kwargs) -> Widget:
         return MovingJourneyMap(
             location=lambda: entry().point,
+            azimuth=lambda: entry().azi,
             privacy_zone=self.privacy,
             renderer=self.renderer,
             timeseries=self.framemeta,
             size=iattrib(element, "size", d=256),
-            zoom=iattrib(element, "zoom", d=16, r=range(1, 20))
+            zoom=iattrib(element, "zoom", d=16, r=range(1, 20)),
+            rotate=battrib(element, "rotate", d=True),
+            line_only=battrib(element, "line-only", d=False),
+            line_rgb=rgbattr(element, "line-rgb", d=(255, 0, 0)),
+            line_width=iattrib(element, "line-width", d=4),
+            loc_fill=rgbattr(element, "loc-fill", d=(0, 0, 255)),
+            loc_size=iattrib(element, "loc-size", d=6),
+            loc_outline=rgbattr(element, "loc-outline", d=None)
         )
 
     @allow_attributes({"size", "fill", "outline", "fill_width", "outline_width"})
@@ -746,3 +754,5 @@ class Widgets:
 
     def create_cairo_gauge_donut(self, element, entry: ET.Element, **kwargs):
         return self.with_cairo(lambda m: m.create_cairo_gauge_donut(element, entry, self.converters, **kwargs))
+
+

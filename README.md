@@ -6,6 +6,13 @@
 
 Discuss on [GitHub Discussions](https://github.com/time4tea/gopro-dashboard-overlay/discussions)
 
+## Hero 12 + FIT Workflow
+
+For a simplified **GoPro Hero 12** local workflow (FIT/GPX sync + map/speed/power and optional heart rate), use:
+
+- `examples/layout/README-modern-descent.md`
+- `examples/layout/run-modern-descent-interactive.sh`
+
 - Overlaying exciting graphics onto GoPro videos with super-exact synchronization
 - Create videos from any GPX or FIT file - no GoPro required
 - Support multiple resolutions, most GoPro models, normal, timelapse & timewarp modes
@@ -181,9 +188,9 @@ Icon files in [icons](gopro_overlay/icons) are not covered by the MIT licence
 
 ## Map Data
 
-Data © [OpenStreetMap contributors](http://www.openstreetmap.org/copyright)
+Data Ãƒâ€šÃ‚Â© [OpenStreetMap contributors](http://www.openstreetmap.org/copyright)
 
-Some Maps © [Thunderforest](http://www.thunderforest.com/)
+Some Maps Ãƒâ€šÃ‚Â© [Thunderforest](http://www.thunderforest.com/)
 
 ## References
 

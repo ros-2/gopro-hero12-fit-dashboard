@@ -1,0 +1,27 @@
+<layout>
+    <!-- Hero12 + HR: moving line-only map (no basemap) -->
+    <translate x="2460" y="20">
+        <frame width="1320" height="1320" cr="42" fo="18" opacity="1.0">
+            <translate y="220">
+                <component type="moving_journey_map"
+                           size="1320"
+                           zoom="15"
+                           rotate="true"
+                           line-only="true"
+                           line-rgb="255,255,255,255"
+                           line-width="10"
+                           loc-fill="45,120,255,255"
+                           loc-size="10" />
+            </translate>
+        </frame>
+    </translate>
+
+    <component type="metric" x="90" y="1410" metric="speed" units="kph" dp="0" size="230" rgb="255,255,255"/>
+    <component type="metric_unit" x="500" y="1520" metric="speed" units="kph" size="78" rgb="255,255,255">{:~c}</component>
+
+    <component type="metric" x="90" y="1705" metric="power" units="watt" dp="0" size="165" rgb="255,255,255"/>
+    <component type="metric_unit" x="400" y="1780" metric="power" units="watt" size="78" rgb="255,255,255">{:~c}</component>
+
+    <component type="metric" x="90" y="1940" metric="hr" dp="0" size="165" rgb="255,255,255"/>
+    <component type="text" x="420" y="2015" size="78" rgb="255,255,255">BPM</component>
+</layout>

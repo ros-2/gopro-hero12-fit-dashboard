@@ -136,11 +136,13 @@ class JourneyMap(Widget):
         image.alpha_composite(frame, self.at.tuple())
 
 
-def draw_marker(draw, position, size, fill=None):
+def draw_marker(draw, position, size, fill=None, outline=(0, 0, 0)):
     fill = fill if fill is not None else (0, 0, 255)
-    draw.ellipse([(position[0] - size, position[1] - size), (position[0] + size, position[1] + size)],
-                 fill=fill,
-                 outline=(0, 0, 0))
+    style = {"fill": fill}
+    if outline is not None:
+        style["outline"] = outline
+
+    draw.ellipse([(position[0] - size, position[1] - size), (position[0] + size, position[1] + size)], **style)
 
 
 class MovingMap(Widget):
@@ -206,13 +208,46 @@ def view_window(size, d):
 
 class MovingJourneyMap(Widget):
 
-    def __init__(self, timeseries, privacy_zone, location, size, zoom, renderer):
+    def __init__(
+            self,
+            timeseries,
+            privacy_zone,
+            location,
+            size,
+            zoom,
+            renderer,
+            azimuth=None,
+            rotate=True,
+            line_only=False,
+            line_rgb=(255, 0, 0),
+            line_width=4,
+            loc_fill=(0, 0, 255),
+            loc_size=6,
+            loc_outline=None
+    ):
         self.privacy_zone = privacy_zone
         self.timeseries = timeseries
         self.size = size
         self.renderer = renderer
         self.zoom = zoom
         self.location = location
+        self.azimuth = azimuth
+        self.rotate = rotate
+
+        self.line_only = line_only
+        self.line_rgb = line_rgb
+        self.line_width = line_width
+        self.loc_fill = loc_fill
+        self.loc_size = loc_size
+        self.loc_outline = loc_outline
+
+        self.hypotenuse = int(math.sqrt((self.size ** 2) * 2))
+        self.bounds = (
+            int((self.hypotenuse - self.size) / 2),
+            int((self.hypotenuse - self.size) / 2),
+            int((self.hypotenuse + self.size) / 2),
+            int((self.hypotenuse + self.size) / 2)
+        )
 
         self.cached_map_image = None
         self.cached_map = None
@@ -236,7 +271,10 @@ class MovingJourneyMap(Widget):
 
         log(f"{self.__class__.__name__} Rendering backing map ({map.size}) (can be slow)")
 
-        map_image = self.renderer(map)
+        if self.line_only:
+            map_image = Image.new("RGBA", map.size, (0, 0, 0, 0))
+        else:
+            map_image = self.renderer(map)
 
         log(f"... done")
 
@@ -246,7 +284,7 @@ class MovingJourneyMap(Widget):
         ]
 
         draw = ImageDraw.Draw(map_image)
-        draw.line(plots, fill=(255, 0, 0), width=4)
+        draw.line(plots, fill=self.line_rgb, width=self.line_width)
 
         return map, map_image
 
@@ -259,12 +297,30 @@ class MovingJourneyMap(Widget):
             current_position_in_big_map = self.cached_map.rev_geocode((location.lon, location.lat))
 
             map_size = self.cached_map_image.size
+            window_size = self.hypotenuse if self.rotate else self.size
 
-            lr = view_window(self.size, map_size[0])(int(current_position_in_big_map[0]))
-            tb = view_window(self.size, map_size[1])(int(current_position_in_big_map[1]))
+            lr = view_window(window_size, map_size[0])(int(current_position_in_big_map[0]))
+            tb = view_window(window_size, map_size[1])(int(current_position_in_big_map[1]))
 
-            image.alpha_composite(self.cached_map_image, (0, 0), source=(lr[0], tb[0], lr[1], tb[1]))
-            draw_marker(draw, (int(self.size / 2), int(self.size / 2)), 6)
+            frame = self.cached_map_image.crop((lr[0], tb[0], lr[1], tb[1]))
+
+            if self.rotate and self.azimuth is not None:
+                azimuth = self.azimuth()
+                if azimuth is not None:
+                    azi = azimuth.to("degree").magnitude
+                    angle = 0 + azi if azi >= 0 else 360 + azi
+                    frame = frame.rotate(angle, resample=Image.BILINEAR)
+
+                frame = frame.crop(self.bounds)
+
+            image.alpha_composite(frame, (0, 0))
+            draw_marker(
+                draw,
+                (int(self.size / 2), int(self.size / 2)),
+                self.loc_size,
+                fill=self.loc_fill,
+                outline=self.loc_outline
+            )
 
 
 class OutLine:
@@ -324,3 +380,7 @@ class Circuit(Widget):
             draw_marker(draw, self.scale(location), 6)
 
         image.alpha_composite(frame, (0, 0))
+
+
+
+
