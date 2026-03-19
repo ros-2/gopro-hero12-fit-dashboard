@@ -405,15 +405,34 @@ class Widgets:
         return self.font(iattrib(element, name, d=d, r=range(1, 2000)))
 
     @allow_attributes(
-        {"x", "y", "metric", "size", "format", "dp", "units", "align", "cache", "rgb", "outline", "outline_width"})
+        {"x", "y", "metric", "size", "format", "dp", "units", "align", "cache", "rgb", "outline", "outline_width", "min", "max"})
     def create_metric(self, element, entry, **kwargs) -> Widget:
+        converter = self.converters.converter(attrib(element, "units", d=None))
+        minimum = fattrib(element, "min", d=None)
+        maximum = fattrib(element, "max", d=None)
+
+        def convert_and_clamp(quantity):
+            converted = converter(quantity)
+            if converted is None:
+                return None
+
+            if minimum is None and maximum is None:
+                return converted
+
+            magnitude = converted.m
+            if minimum is not None:
+                magnitude = max(minimum, magnitude)
+            if maximum is not None:
+                magnitude = min(maximum, magnitude)
+            return units.Quantity(magnitude, converted.u)
+
         return metric(
             at=at(element),
             entry=entry,
             accessor=metric_accessor_from(attrib(element, "metric")),
             formatter=quantity_formatter_from(element),
             font=self._font(element, "size", d=16),
-            converter=self.converters.converter(attrib(element, "units", d=None)),
+            converter=convert_and_clamp,
             align=attrib(element, "align", d="left"),
             cache=battrib(element, "cache", d=True),
             fill=rgbattr(element, "rgb", d=(255, 255, 255)),
@@ -754,5 +773,4 @@ class Widgets:
 
     def create_cairo_gauge_donut(self, element, entry: ET.Element, **kwargs):
         return self.with_cairo(lambda m: m.create_cairo_gauge_donut(element, entry, self.converters, **kwargs))
-
 

@@ -84,6 +84,7 @@ prompt_int() {
 echo
 echo "Hero12 Dashboard Setup (Interactive)"
 echo "-------------------------------------"
+echo "Cadence is auto-included when present in FIT/GPX."
 echo
 
 VIDEO_PATH="$(prompt_file 'Video file path (.mp4): ' '\.[mM][pP]4$')"

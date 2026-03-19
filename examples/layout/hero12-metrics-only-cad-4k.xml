@@ -1,0 +1,13 @@
+<layout>
+    <component type="metric" x="760" y="720" metric="speed" units="kph" dp="0" size="320" align="right" rgb="255,255,255"/>
+    <component type="metric_unit" x="790" y="830" metric="speed" units="kph" size="110" rgb="255,255,255">{:~c}</component>
+
+    <component type="metric" x="730" y="1120" metric="power" units="watt" dp="0" size="250" align="right" rgb="255,255,255"/>
+    <component type="metric_unit" x="760" y="1205" metric="power" units="watt" size="95" rgb="255,255,255">{:~c}</component>
+
+    <component type="metric" x="730" y="1450" metric="cadence" units="rpm" dp="0" size="230" align="right" rgb="255,255,255"/>
+    <component type="metric_unit" x="760" y="1530" metric="cadence" units="rpm" size="90" rgb="255,255,255">{:~c}</component>
+
+    <component type="metric" x="730" y="1720" metric="gradient" format=".1f" size="120" align="right" rgb="255,255,255"/>
+    <component type="text" x="760" y="1775" size="58" rgb="255,255,255">%</component>
+</layout>

@@ -1,24 +1,20 @@
 <layout>
     <!-- Hero12 default: moving line-only map (no basemap) -->
-    <translate x="2460" y="20">
-        <frame width="1320" height="1320" cr="42" fo="18" opacity="1.0">
-            <translate y="220">
-                <component type="moving_journey_map"
-                           size="1320"
-                           zoom="15"
-                           rotate="true"
-                           line-only="true"
-                           line-rgb="255,255,255,255"
-                           line-width="10"
-                           loc-fill="45,120,255,255"
-                           loc-size="10" />
-            </translate>
-        </frame>
+    <translate x="2750" y="120">
+        <component type="moving_journey_map"
+                   size="920"
+                   zoom="15"
+                   rotate="true"
+                   line-only="true"
+                   line-rgb="255,255,255,255"
+                   line-width="9"
+                   loc-fill="45,120,255,255"
+                   loc-size="9" />
     </translate>
 
-    <component type="metric" x="90" y="1480" metric="speed" units="kph" dp="0" size="250" rgb="255,255,255"/>
-    <component type="metric_unit" x="540" y="1600" metric="speed" units="kph" size="84" rgb="255,255,255">{:~c}</component>
+    <component type="metric" x="760" y="760" metric="speed" units="kph" dp="0" size="320" align="right" rgb="255,255,255"/>
+    <component type="metric_unit" x="790" y="870" metric="speed" units="kph" size="110" rgb="255,255,255">{:~c}</component>
 
-    <component type="metric" x="90" y="1820" metric="power" units="watt" dp="0" size="180" rgb="255,255,255"/>
-    <component type="metric_unit" x="430" y="1900" metric="power" units="watt" size="84" rgb="255,255,255">{:~c}</component>
+    <component type="metric" x="730" y="1220" metric="power" units="watt" dp="0" size="250" align="right" rgb="255,255,255"/>
+    <component type="metric_unit" x="760" y="1305" metric="power" units="watt" size="95" rgb="255,255,255">{:~c}</component>
 </layout>

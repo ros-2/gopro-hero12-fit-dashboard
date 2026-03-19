@@ -1,0 +1,7 @@
+<layout>
+    <component type="metric" x="980" y="1080" metric="speed" units="kph" dp="0" size="460" align="right" rgb="255,255,255"/>
+    <component type="metric_unit" x="1010" y="1240" metric="speed" units="kph" size="150" rgb="255,255,255">{:~c}</component>
+
+    <component type="metric" x="930" y="1700" metric="power" units="watt" dp="0" size="360" align="right" rgb="255,255,255"/>
+    <component type="metric_unit" x="960" y="1820" metric="power" units="watt" size="135" rgb="255,255,255">{:~c}</component>
+</layout>

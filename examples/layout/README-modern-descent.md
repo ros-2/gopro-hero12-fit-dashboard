@@ -6,6 +6,7 @@ What it renders:
 - moving route map (line-only, no basemap tiles)
 - speed (kph)
 - power (watts)
+- cadence (rpm) when present in FIT/GPX
 - optional heart rate (BPM)
 
 What it always does:
@@ -30,6 +31,7 @@ It prompts for:
 - telemetry path (`.fit` or `.gpx`)
 - output path
 - include heart rate or not
+- cadence is auto-included when present
 - sync time + offset
 - intro seconds
 - optional font

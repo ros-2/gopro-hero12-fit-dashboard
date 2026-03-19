@@ -1,0 +1,26 @@
+<layout>
+    <!-- Hero12 + HR + cadence: moving line-only map (no basemap) -->
+    <translate x="2750" y="120">
+        <component type="moving_journey_map"
+                   size="920"
+                   zoom="15"
+                   rotate="true"
+                   line-only="true"
+                   line-rgb="255,255,255,255"
+                   line-width="9"
+                   loc-fill="45,120,255,255"
+                   loc-size="9" />
+    </translate>
+
+    <component type="metric" x="700" y="620" metric="speed" units="kph" dp="0" size="280" align="right" rgb="255,255,255"/>
+    <component type="metric_unit" x="730" y="720" metric="speed" units="kph" size="98" rgb="255,255,255">{:~c}</component>
+
+    <component type="metric" x="680" y="980" metric="power" units="watt" dp="0" size="210" align="right" rgb="255,255,255"/>
+    <component type="metric_unit" x="710" y="1055" metric="power" units="watt" size="84" rgb="255,255,255">{:~c}</component>
+
+    <component type="metric" x="680" y="1280" metric="cadence" units="rpm" dp="0" size="190" align="right" rgb="255,255,255"/>
+    <component type="metric_unit" x="710" y="1348" metric="cadence" units="rpm" size="76" rgb="255,255,255">{:~c}</component>
+
+    <component type="metric" x="680" y="1600" metric="hr" dp="0" size="185" align="right" rgb="255,255,255"/>
+    <component type="text" x="710" y="1668" size="74" rgb="255,255,255">BPM</component>
+</layout>

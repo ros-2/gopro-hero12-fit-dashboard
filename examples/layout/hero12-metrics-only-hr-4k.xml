@@ -1,0 +1,10 @@
+<layout>
+    <component type="metric" x="940" y="920" metric="speed" units="kph" dp="0" size="390" align="right" rgb="255,255,255"/>
+    <component type="metric_unit" x="970" y="1055" metric="speed" units="kph" size="135" rgb="255,255,255">{:~c}</component>
+
+    <component type="metric" x="900" y="1360" metric="power" units="watt" dp="0" size="300" align="right" rgb="255,255,255"/>
+    <component type="metric_unit" x="930" y="1465" metric="power" units="watt" size="120" rgb="255,255,255">{:~c}</component>
+
+    <component type="metric" x="900" y="1740" metric="hr" dp="0" size="300" align="right" rgb="255,255,255"/>
+    <component type="text" x="930" y="1845" size="120" rgb="255,255,255">BPM</component>
+</layout>

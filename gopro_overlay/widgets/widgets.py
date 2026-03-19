@@ -4,7 +4,7 @@ import os
 from importlib.resources import files, as_file
 from typing import Tuple, List
 
-from PIL import Image, ImageDraw
+from PIL import Image, ImageDraw, ImageChops
 
 from gopro_overlay import icons
 from gopro_overlay.dimensions import Dimension
@@ -208,7 +208,8 @@ class Frame(Widget):
     def draw(self, image: Image, draw: ImageDraw):
         self._maybe_init()
 
-        rect = Image.new('RGBA', (self.dimensions.x, self.dimensions.y), self.fill)
+        # If no frame background is explicitly set, keep it transparent.
+        rect = Image.new('RGBA', (self.dimensions.x, self.dimensions.y), self.fill if self.fill is not None else (0, 0, 0, 0))
         rect_draw = ImageDraw.Draw(rect)
 
         self.child.draw(rect, rect_draw)
@@ -220,7 +221,10 @@ class Frame(Widget):
                 outline=self.outline
             )
 
-        rect.putalpha(self.mask)
+        # Preserve child alpha and apply frame mask multiplicatively.
+        # Replacing alpha outright makes transparent pixels turn opaque black.
+        existing_alpha = rect.getchannel("A")
+        rect.putalpha(ImageChops.multiply(existing_alpha, self.mask))
 
         image.alpha_composite(rect, (0, 0))
 
